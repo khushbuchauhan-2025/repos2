@@ -1,0 +1,35 @@
+name: Deploy HTML to Nginx
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux, x64]
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Display runner information
+        run: |
+          echo "Running on Ubuntu Docker Container"
+          hostname
+          whoami
+          pwd
+          ls -la
+
+      - name: Deploy HTML
+        run: |
+          cp index.html /var/www/html/index.html
+
+      - name: Verify deployment
+        run: |
+          ls -l /var/www/html/
+          cat /var/www/html/index.html
+          echo "HTML file deployment successful"
